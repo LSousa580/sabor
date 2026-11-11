@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Produto | Hortifrúti</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Materialize CSS (opcional para suporte a classes auxiliares de grid, caso utilize) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    
+    <style>
+        /* =========================================================
+           VARIÁVEIS
+           ========================================================= */
+        :root {
+            --verde: #31511f;
+            --verde-escuro: #203817;
+            --verde-medio: #4d702b;
+            --verde-claro: #edf5e8;
+            --lima: #a8df65;
+            --creme: #f8f7f1;
+            --branco: #ffffff;
+            --texto: #24331d;
+            --texto-claro: #687261;
+            --borda: #dce7d3;
+            --sombra: 0 10px 30px rgba(27, 48, 20, 0.10);
+            --sombra-forte: 0 18px 45px rgba(15, 35, 10, 0.20);
+        }
+
+        /* =========================================================
+           BASE & ESTILOS DA PÁGINA DE CADASTRO
+           ========================================================= */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            color: var(--texto);
+            background-color: var(--creme);
+            font-family: "DM Sans", Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        button, input {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        /* Navbar Simples */
+        .nav-principal {
+            background: rgba(36, 61, 23, 0.96);
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.14);
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            min-height: 64px;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--branco);
+            font-size: 1.2rem;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .brand-logo i {
+            color: var(--lima);
+        }
+
+        /* Container de Cadastro */
+        .register-container {
+            width: 100%;
+            max-width: 680px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .register-card {
+            background-color: var(--branco);
+            border: 1px solid rgba(217, 229, 200, 0.78);
+            border-radius: 22px;
+            padding: 40px;
+            box-shadow: var(--sombra);
+        }
+
+        .register-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .register-header h1 {
+            margin: 0 0 8px;
+            color: var(--verde-escuro);
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+        }
+
+        .register-header p {
+            margin: 0;
+            color: var(--texto-claro);
+            font-size: 0.95rem;
+        }
+
+        /* Formulário */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--verde-escuro);
+            font-size: 0.88rem;
+            font-weight: 700;
+        }
+
+        input[type="text"],
+        input[type="file"] {
+            width: 100%;
+            height: 48px;
+            padding: 0 14px;
+            border: 1px solid var(--borda);
+            border-radius: 10px;
+            background-color: var(--branco);
+            color: var(--texto);
+            font-size: 0.95rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--verde-medio);
+            box-shadow: 0 0 0 3px rgba(77, 112, 43, 0.12);
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            background-color: var(--verde-claro);
+            cursor: pointer;
+        }
+
+        .btn-full {
+            width: 100%;
+            height: 50px;
+            border: none;
+            border-radius: 10px;
+            background-color: var(--lima);
+            color: var(--verde-escuro);
+            font-weight: 800;
+            font-size: 1rem;
+            box-shadow: none;
+            transition: filter 0.2s ease, background-color 0.2s ease;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-full:hover {
+            background-color: #96cd56;
+        }
+
+        @media (max-width: 600px) {
+            .register-card {
+                padding: 24px 16px;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar de Referência -->
+    <header class="nav-principal">
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo">
+                <i class="material-icons">eco</i> Hortifrúti Gestão
+            </a>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal de Cadastro -->
+    <main class="register-container">
+        <div class="register-card">
+            <div class="register-header">
+                <h1>Cadastrar Produto</h1>
+                <p>Preencha as informações abaixo para adicionar um novo item ao catálogo.</p>
+            </div>
+
+            <form id="formProduto" enctype="multipart/form-data">
+                
+                <div class="form-group">
+                    <label for="name">Nome do produto</label>
+                    <input id="name" type="text" name="name" placeholder="Ex: Tomate Orgânico" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="image">Imagem do Produto</label>
+                    <input type="file" id="image" name="image" accept="image/*" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="category">Categoria do produto</label>
+                        <input id="category" type="text" name="category" placeholder="Ex: Hortaliças" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryLabel">Label do produto</label>
+                        <input id="categoryLabel" type="text" name="categoryLabel" placeholder="Ex: Orgânico" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="unit">Unidade de medida</label>
+                        <input id="unit" type="text" name="unit" placeholder="Ex: 1 kg" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="badge">Etiqueta (Badge)</label>
+                        <input id="badge" type="text" name="badge" placeholder="Ex: -15%" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="price">Preço atual (R$)</label>
+                        <input id="price" type="text" name="price" placeholder="0,00" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="oldPrice">Preço antigo (R$)</label>
+                        <input id="oldPrice" type="text" name="oldPrice" placeholder="0,00" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-full">
+                    <i class="material-icons">add_circle_outline</i> Cadastrar produto
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <script src="./product.js"></script>
+</body>
+
+</html>

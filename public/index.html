@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Sabor da Terra Tapajós - frutas, verduras, legumes e produtos regionais.">
+
+    <title>Sabor da Terra Tapajós</title>
+
+    <!-- Ícones do Material Design -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Fonte opcional para dar mais personalidade ao layout -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Materialize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- CSS personalizado -->
+    <link rel="stylesheet" href="estilo.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         CABEÇALHO / MENU
+         ===================================================== -->
+    <div class="navbar-fixed">
+        <nav class="nav-principal">
+            <div class="nav-wrapper container">
+
+                <a href="#inicio" class="brand-logo logo">
+                    <i class="material-icons left">eco</i>
+                    Sabor da Terra
+                </a>
+
+                <!-- Botão do menu mobile -->
+                <a href="#" data-target="menu-mobile" class="sidenav-trigger right"
+                    aria-label="Abrir menu de navegação">
+                    <i class="material-icons">menu</i>
+                </a>
+
+                <!-- Menu desktop -->
+                <ul class="right hide-on-med-and-down">
+                    <li>
+                        <a href="#produtos">
+                            <i class="material-icons left">storefront</i>
+                            Produtos
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#safra">
+                            <i class="material-icons left">eco</i>
+                            Safra
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#favoritos">
+                            <i class="material-icons left">favorite_border</i>
+                            Favoritos
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#contato">
+                            <i class="material-icons left">support_agent</i>
+                            Contato
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#carrinho" class="cart-link modal-trigger" data-target="cartModal">
+                            <i class="material-icons left">shopping_cart</i>
+                            Carrinho
+                            <span id="cartCount" class="badge-cart">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <!-- =====================================================
+         MENU MOBILE
+         ===================================================== -->
+    <ul class="sidenav" id="menu-mobile">
+        <li>
+            <div class="user-view menu-mobile-header">
+                <div class="menu-mobile-logo">
+                    <i class="material-icons">eco</i>
+                </div>
+
+                <span class="white-text name">
+                    Sabor da Terra Tapajós
+                </span>
+
+                <span class="white-text email">
+                    Produtos frescos para sua casa
+                </span>
+            </div>
+        </li>
+
+        <li>
+            <a href="#produtos" class="sidenav-close">
+                <i class="material-icons">storefront</i>
+                Produtos
+            </a>
+        </li>
+
+        <li>
+            <a href="#safra" class="sidenav-close">
+                <i class="material-icons">eco</i>
+                Safra do mês
+            </a>
+        </li>
+
+        <li>
+            <a href="#favoritos" class="sidenav-close">
+                <i class="material-icons">favorite_border</i>
+                Favoritos
+            </a>
+        </li>
+
+        <li>
+            <a href="#contato" class="sidenav-close">
+                <i class="material-icons">support_agent</i>
+                Contato
+            </a>
+        </li>
+
+        <li>
+            <a href="#!" class="sidenav-close modal-trigger" data-target="cartModal">
+                <i class="material-icons">shopping_cart</i>
+                Carrinho
+                <span id="cartCountMobile" class="new badge badge-mobile">0</span>
+            </a>
+        </li>
+    </ul>
+
+    <!-- =====================================================
+         BANNER PRINCIPAL
+         ===================================================== -->
+    <header class="hero" id="inicio">
+        <div class="hero-overlay"></div>
+
+        <div class="container hero-content">
+            <div class="row hero-row">
+
+                <div class="col s12 l7 hero-text-column">
+                    <span class="hero-tag">
+                        <i class="material-icons tiny">eco</i>
+                        Produtos naturais e frescos
+                    </span>
+
+                    <h1>Direto da nossa terra para a sua mesa.</h1>
+
+                    <p class="hero-description">
+                        Frutas, verduras, legumes e produtos regionais selecionados
+                        para levar mais sabor, qualidade e praticidade ao seu dia.
+                    </p>
+
+                    <!-- Busca -->
+                    <form id="searchForm" class="search-box">
+                        <label for="searchInput" class="sr-only">
+                            Buscar produto
+                        </label>
+
+                        <i class="material-icons search-icon">search</i>
+
+                        <input id="searchInput" type="search" placeholder="O que você procura hoje?" autocomplete="off">
+
+                        <button type="submit" aria-label="Buscar produtos">
+                            Buscar
+                        </button>
+                    </form>
+
+                    <!-- Botão CEP -->
+                    <button type="button" class="cep-button modal-trigger" data-target="cepModal">
+                        <span class="cep-icon-box">
+                            <i class="material-icons">location_on</i>
+                        </span>
+
+                        <span class="cep-text">
+                            <strong id="cepButtonText">Informe seu CEP</strong>
+                            <small>Veja a disponibilidade para sua região</small>
+                        </span>
+
+                        <i class="material-icons cep-arrow">chevron_right</i>
+                    </button>
+                </div>
+
+                <!-- Card lateral -->
+                <div class="col s12 l4 offset-l1">
+                    <aside class="delivery-card">
+                        <div class="delivery-icon-box">
+                            <i class="material-icons">local_shipping</i>
+                        </div>
+
+                        <h2>Compre com praticidade</h2>
+
+                        <p>
+                            Escolha seus alimentos favoritos, adicione ao carrinho
+                            e monte seu pedido de um jeito simples.
+                        </p>
+
+                        <a href="#produtos" class="btn btn-hero waves-effect waves-light">
+                            Ver produtos
+                            <i class="material-icons right">arrow_downward</i>
+                        </a>
+                    </aside>
+                </div>
+            </div>
+
+            <!-- Categorias -->
+            <div class="categories-wrapper">
+                <div class="categories-heading">
+                    <h2 class="categories-title">Compre por categoria</h2>
+
+                    <span class="categories-help">
+                        Deslize para ver mais
+                        <i class="material-icons tiny">swipe</i>
+                    </span>
+                </div>
+
+                <div class="categories" aria-label="Categorias de produtos">
+                    <button type="button" class="category active" data-category="todos">
+                        <span class="category-image">
+                            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=250&q=80"
+                                alt="Todos os produtos">
+                        </span>
+                        <span>Todos</span>
+                    </button>
+
+                    <button type="button" class="category" data-category="frutas">
+                        <span class="category-image">
+                            <img src="images/frutas.jpg"
+                                alt="Frutas">
+                        </span>
+                        <span>Frutas</span>
+                    </button>
+
+                    <button type="button" class="category" data-category="verduras">
+                        <span class="category-image">
+                            <img src="images/verduras.jpeg"
+                                alt="Verduras">
+                        </span>
+                        <span>Verduras</span>
+                    </button>
+
+                    <button type="button" class="category" data-category="legumes">
+                        <span class="category-image">
+                            <img src="images/legumes.jpg"
+                                alt="Legumes">
+                        </span>
+                        <span>Legumes</span>
+                    </button>
+
+                    <button type="button" class="category" data-category="temperos">
+                        <span class="category-image">
+                            <img src="images/temperos.jpg"
+                                alt="Temperos">
+                        </span>
+                        <span>Temperos</span>
+                    </button>
+
+                    <button type="button" class="category" data-category="polpas">
+                        <span class="category-image">
+                            <img src="images/polpas.jpeg"
+                                alt="Polpas de fruta">
+                        </span>
+                        <span>Polpas</span>
+                    </button>
+
+                    <button type="button" class="category" data-category="naturais">
+                        <span class="category-image">
+                            <img src=""
+                                alt="Produtos naturais">
+                        </span>
+                        <span>Naturais</span>
+                    </button>
+
+                    <button type="button" class="category" data-category="outros">
+                        <span class="category-image">
+                            <img src="https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=250&q=80"
+                                alt="Produtos regionais">
+                        </span>
+                        <span>Regionais</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- =====================================================
+         CONTEÚDO PRINCIPAL
+         ===================================================== -->
+    <main>
+
+        <!-- Produtos -->
+        <section class="products-section" id="produtos">
+            <div class="container">
+
+                <div class="section-heading">
+                    <div>
+                        <span class="section-eyebrow">
+                            Alimentos selecionados
+                        </span>
+
+                        <h2>Produtos em destaque</h2>
+
+                        <p id="productsMessage">
+                            Confira produtos frescos disponíveis para você.
+                        </p>
+                    </div>
+
+                    <!-- Ordenação -->
+                    <div class="filter-area">
+                        <a class="btn-flat dropdown-trigger filter-button" href="#!" data-target="sortDropdown">
+                            <i class="material-icons left">tune</i>
+                            Ordenar
+                            <i class="material-icons right">arrow_drop_down</i>
+                        </a>
+
+                        <ul id="sortDropdown" class="dropdown-content">
+                            <li>
+                                <a href="#!" data-sort="default">
+                                    Destaques
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#!" data-sort="az">
+                                    Nome: A-Z
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#!" data-sort="price-asc">
+                                    Menor preço
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#!" data-sort="price-desc">
+                                    Maior preço
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Produtos preenchidos pelo JavaScript -->
+                <div class="row product-grid" id="productGrid"></div>
+
+                <!-- Estado vazio da busca -->
+                <div id="emptyState" class="empty-state hide">
+                    <i class="material-icons">search_off</i>
+                    <h3>Nenhum produto encontrado</h3>
+                    <p>
+                        Tente buscar por outro nome ou selecione outra categoria.
+                    </p>
+                </div>
+
+                <div class="center-align products-actions">
+                    <button id="showAllProducts" class="btn-outline waves-effect" type="button">
+                        Ver todos os produtos
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Safra -->
+        <section class="season" id="safra">
+            <div class="season-overlay"></div>
+
+            <div class="container season-content">
+                <div class="row valign-wrapper season-row">
+                    <div class="col s12 m7">
+                        <span class="season-label">
+                            <i class="material-icons tiny">star</i>
+                            Safra do mês
+                        </span>
+
+                        <h2>Rambutan</h2>
+
+                        <p>
+                            Uma fruta tropical de aparência marcante, polpa doce
+                            e textura suculenta. Aproveite a época em que ela está
+                            mais fresca e saborosa.
+                        </p>
+
+                        <button type="button" class="btn btn-season waves-effect waves-light" data-search="rambutan">
+                            Conhecer produtos
+                            <i class="material-icons right">shopping_basket</i>
+                        </button>
+                    </div>
+
+                    <div class="col s12 m5 center-align">
+                        <img src="https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=700&q=85"
+                            alt="Frutas tropicais em uma cesta" class="season-image responsive-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefícios -->
+        <section class="benefits" id="favoritos">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col s12 center-align benefits-heading">
+                        <span class="section-eyebrow green-text">
+                            Por que escolher a gente?
+                        </span>
+
+                        <h2>Mais sabor, frescor e praticidade</h2>
+
+                        <p>
+                            Uma forma simples de encontrar alimentos que combinam
+                            com a sua rotina.
+                        </p>
+                    </div>
+
+                    <article class="col s12 m4">
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <i class="material-icons">eco</i>
+                            </div>
+
+                            <h3>Produtos frescos</h3>
+
+                            <p>
+                                Selecionamos alimentos para oferecer mais qualidade
+                                às suas refeições todos os dias.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="col s12 m4">
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <i class="material-icons">favorite</i>
+                            </div>
+
+                            <h3>Cuidado em cada pedido</h3>
+
+                            <p>
+                                Organizamos a sua compra com atenção, do carrinho
+                                até a entrega.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="col s12 m4">
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <i class="material-icons">local_shipping</i>
+                            </div>
+
+                            <h3>Mais praticidade</h3>
+
+                            <p>
+                                Faça seu pedido online e acompanhe todos os itens
+                                escolhidos no carrinho.
+                            </p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chamada final -->
+        <section class="newsletter-section" id="contato">
+            <div class="container">
+                <div class="newsletter-content">
+                    <div>
+                        <span class="section-eyebrow">Novidades da feira</span>
+                        <h2>Receba ofertas e produtos da estação.</h2>
+                        <p>
+                            Cadastre seu e-mail e fique por dentro das novidades
+                            da Sabor da Terra Tapajós.
+                        </p>
+                    </div>
+
+                    <form id="newsletterForm" class="newsletter-form">
+                        <label for="newsletterEmail" class="sr-only">
+                            Seu e-mail
+                        </label>
+
+                        <input id="newsletterEmail" type="email" placeholder="Digite seu melhor e-mail" required>
+
+                        <button class="btn waves-effect waves-light" type="submit">
+                            Quero receber
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- =====================================================
+         RODAPÉ
+         ===================================================== -->
+    <footer class="page-footer footer">
+        <div class="container">
+            <div class="row">
+
+                <div class="col s12 m5">
+                    <a href="#inicio" class="footer-logo">
+                        <i class="material-icons">eco</i>
+                        Sabor da Terra Tapajós
+                    </a>
+
+                    <p class="footer-description">
+                        Produtos naturais, frutas, hortaliças e sabores regionais
+                        escolhidos para tornar a sua rotina mais leve e saborosa.
+                    </p>
+
+                    <div class="social-links">
+                        <a href="#!" aria-label="Instagram">
+                            <i class="material-icons">camera_alt</i>
+                        </a>
+
+                        <a href="#!" aria-label="Facebook">
+                            <i class="material-icons">thumb_up</i>
+                        </a>
+
+                        <a href="#!" aria-label="WhatsApp">
+                            <i class="material-icons">chat</i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col s12 m3">
+                    <h5>Institucional</h5>
+
+                    <ul>
+                        <li><a href="#inicio">Início</a></li>
+                        <li><a href="#produtos">Produtos</a></li>
+                        <li><a href="#safra">Safra do mês</a></li>
+                        <li><a href="#!">Como comprar</a></li>
+                        <li><a href="#!">Política de privacidade</a></li>
+                    </ul>
+                </div>
+
+                <div class="col s12 m4">
+                    <h5>Atendimento</h5>
+
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="material-icons">mail_outline</i>
+                            <a href="mailto:contato@sabordaterratapajos.com">
+                                contato@sabordaterratapajos.com
+                            </a>
+                        </li>
+
+                        <li>
+                            <i class="material-icons">phone</i>
+                            <a href="tel:+5593000000000">
+                                (93) 00000-0000
+                            </a>
+                        </li>
+
+                        <li>
+                            <i class="material-icons">schedule</i>
+                            <span>Segunda a sábado, 8h às 18h</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-copyright">
+            <div class="container">
+                <span>
+                    © <span id="currentYear"></span> Sabor da Terra Tapajós.
+                    Todos os direitos reservados.
+                </span>
+
+                <span class="right hide-on-small-only">
+                    Feito com carinho na Amazônia
+                    <i class="material-icons tiny">favorite</i>
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- =====================================================
+         MODAL: CEP
+         ===================================================== -->
+    <div id="cepModal" class="modal">
+        <div class="modal-content">
+            <button type="button" class="modal-close close-modal" aria-label="Fechar modal">
+                <i class="material-icons">close</i>
+            </button>
+
+            <div class="modal-icon">
+                <i class="material-icons">location_on</i>
+            </div>
+
+            <h4>Informe seu CEP</h4>
+
+            <p>
+                Digite o CEP para verificarmos a disponibilidade de entrega para
+                a sua região.
+            </p>
+
+            <form id="cepForm">
+                <div class="input-field">
+                    <i class="material-icons prefix">place</i>
+
+                    <input id="cepInput" type="text" inputmode="numeric" maxlength="9" placeholder="00000-000" required>
+
+                    <label for="cepInput" class="active">
+                        CEP de entrega
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-full waves-effect waves-light">
+                    Verificar disponibilidade
+                    <i class="material-icons right">arrow_forward</i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- =====================================================
+         MODAL: CARRINHO
+         ===================================================== -->
+    <div id="cartModal" class="modal cart-modal">
+        <div class="modal-content">
+            <button type="button" class="modal-close close-modal" aria-label="Fechar carrinho">
+                <i class="material-icons">close</i>
+            </button>
+
+            <div class="cart-modal-heading">
+                <div class="modal-icon">
+                    <i class="material-icons">shopping_cart</i>
+                </div>
+
+                <div>
+                    <h4>Seu carrinho</h4>
+                    <p id="cartItemsText">Seu carrinho está vazio.</p>
+                </div>
+            </div>
+
+            <div id="cartItems" class="cart-items"></div>
+
+            <div id="cartEmpty" class="cart-empty">
+                <i class="material-icons">shopping_basket</i>
+                <h5>Seu carrinho está vazio</h5>
+                <p>Adicione produtos frescos para começar o seu pedido.</p>
+            </div>
+
+            <div id="cartSummary" class="cart-summary hide">
+                <div class="cart-total">
+                    <span>Total estimado</span>
+                    <strong id="cartTotal">R$ 0,00</strong>
+                </div>
+
+                <button id="checkoutButton" type="button" class="btn btn-full waves-effect waves-light">
+                    Finalizar pedido
+                    <i class="material-icons right">arrow_forward</i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Materialize JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- JavaScript da página -->
+    <script src="script.js"></script>
+</body>
+
+</html>

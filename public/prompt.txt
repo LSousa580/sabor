@@ -1,0 +1,606 @@
+Você é um desenvolvedor front-end sênior, especialista em HTML5, CSS e Javascript. Sua tarefa é analisar o código HTML abaixo e apontar eventuais melhorias levando em consideração o contexto da página. Traga a resposta no formato de texto corrido com tópicos, explicando detalhadamente e usando linguagem acessível de maneira que até um macaco entenderia.
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabor da terra tapajós</title>
+    <link rel="stylesheet" href="estilo.css">
+
+    <link rel="stylesheet" href="./css/materialize.css" />
+    <link rel="stylesheet" href="/css/materialize.min.css" />
+
+    <script src="./js/materialize.js"></script>
+    <script src="./js/materialize.min.js"></script>
+</head>
+
+<body>
+    <!-- Banner superior -->
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper">
+                <a href="#!" class="brand-logo right">Logo</a>
+
+                <ul class="left hide-on-med-and-down">
+                    <li><a href="#">Carrinho</a></li>
+                    <li><a href="#">Favoritos</a></li>
+                    <li><a href="#">Menu</a></li>
+                    <li><a href="#">Login</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Primeira section: Principal -->
+    <header class="hero">
+
+        <div class="hero-content">
+            <h1>Direto do campo para seu dia a dia!</h1>
+        </div>
+
+        <div class="cep">
+            <img src="./icons/cep.svg" />
+            <p>Informe seu CEP</p>
+        </div>
+
+        <!-- Conteiner dos botões de categorias -->
+        <div class="categories">
+            <div class="category">
+                <img src="./images/promocoes.jpeg" />
+                <div>Promoções</div>
+            </div>
+
+            <div class="category">
+                <img src="./images/frutas.jpg" />
+                <div>Frutas</div>
+            </div>
+
+            <div class="category">
+                <img src="./images/verduras.jpeg" />
+                <div>Verduras</div>
+            </div>
+
+            <div class="category">
+                <img src="./images/legumes.jpg" />
+                <div>Legumes</div>
+            </div>
+
+            <div class="category">
+                <img src="./images/hortalicas.jpeg" />
+                <div>Hortaliças</div>
+            </div>
+
+            <div class="category">
+                <img src="./images/temperos.jpg" />
+                <div>Temperos</div>
+            </div>
+
+            <div class="category">
+                <img src="./images/polpas.jpeg" />
+                <div>Polpas</div>
+            </div>
+
+            <div class="category">
+                <img src="./images/remedios.jpeg" />
+                <div>Remedios Naturais</div>
+            </div>
+
+            <div class="category">
+                <img src="./images/outros.jpeg" />
+                <div>Outros</div>
+            </div>
+
+        </div>
+
+    </header>
+
+    <!-- Segunda section: Produtos -->
+    <section class="products-section">
+        <div class="section-tools">
+            <div class="more">Ver mais</div>
+            <div class="filter">
+                Filtros
+                <div class="filter-box">
+                    <label>Ordenar</label>
+                    <select id="sort">
+                        <option value="az">de A-Z</option>
+                        <option value="price">Preço</option>
+                    </select>
+
+                </div>
+            </div>
+        </div>
+        <!--Painel de exibição dos cards-->
+        <div class="grid" id="productGrid"></div>
+
+    </section>
+    <!--Terceira Section-->
+    <section class="season">
+        <h2>SAFRA DO MÊS</h2>
+        <p>Rambutan</p>
+    </section>
+    <!--Footer:Informações-->
+    <footer class="footer">
+        <div>
+            <h2>
+                Institucional
+            </h2>
+        </div>
+    </footer>
+
+    <script>
+        const produtos = [
+            {
+                id: 1,
+                nome: "Alface Lisa Orgânica Maço",
+                preco: 7.5,
+                img: "./imagem/frutas.jpg"
+            },
+            {
+                id: 2,
+                nome: "Tomate",
+                preco: 11.9,
+                img: ""
+            }
+        ];
+
+        const money = (v) => v.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL"
+        });
+
+        const getCart = () => JSON.parse(localStorage.getItem("SaborCart") || "[]");
+        const setCart = (p) => localStorage.setItem("SaborCart", JSON.stringify(p));
+
+        /**
+         * Função que adiciona um produto ao carrinho
+         * @param {*} id :id do produto a ser adicionado
+         */
+        function add(id) {
+            let carrinho = getCart();
+            let listaProdutos = produtos.find((x) => x.id === id);
+            let indice = carrinho.findIndex((c) => c.id === id);
+
+            if (indice >= 0) {
+                carrinho[indice].q++;
+            } else {
+                carrinho.push({ ...listaProdutos, q: 1 });
+            }
+
+            setCart(carrinho);
+            toast(`${listaProdutos.nome} adicionando ao carrinho!`);
+        }
+
+        function toast(texto) {
+            const elemento = document.getElementById("toast");
+            elemento.textContent = texto;
+            elemento.classList.add("show");
+
+            setTimeout(() => elemento.classList.remove("show"), 1000);
+        }
+
+        function render(list = produtos) {
+            document.getElementById("productGrid").innerHTML = list.map((produto) =>
+                `<article class="card">
+        <button class="heart">favoritar</button>
+        <img src="${produto.img}" alt="${produto.nome}">
+        <h3>${produto.nome}</h3>
+        <div class="price">${money(produto.preco)}</div>
+        <button class="add" onClick="add(${produto.id})">Adicionar</button>
+        </article>`
+            ).join("");
+        }
+
+        function search() {
+            const elemento = document.getElementById("searchInput");
+            const texto = elemento.value.toLowrCase();
+
+            render(
+                produtos.filter((produto) =>
+                    produto.nome.toLoweCase().includes(texto)
+                )
+            );
+        }
+
+        document.getElementById("searchForm").addEventListener(
+            "submit",
+            (evento) => {
+                evento.preventDefault();
+                search();
+            }
+        );
+
+        document.getElementById("searchInput").addEventListener("input", search);
+
+        document.getAnimations.getElementById("sort").addEventListener(
+            "change",
+            (evento) => {
+                let lista = [...produtos];
+
+                if (evento.target.value === "az") {
+                    lista.sort((a, b) => a.nome.localeCompare(b.nome));
+                } else {
+                    lista.sort((a, b) => a.preco - b.preco);
+                }
+
+                render(lista);
+            }
+        );
+
+
+    </script>
+
+</body>
+
+</html>
+
+Você vai analisar o código CSS abaixo, apontando melhorias e otimizações. Traga a resposta em texto com tópicos e também explique de maneira acessível e de forma que até um macaco entenderia 
+
+:root {
+    --verde: #31511f;
+    --verde2: #4d702b;
+    --lima: #7ed957;
+    --creme: #f4f3ed;
+    --branco: #ffffff;
+    --texto: #263b1b;
+    --borda: #d9e5c8;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--texto);
+    background: var(--lima);
+}
+
+button,
+input,
+select {
+    font: inherit
+}
+
+.topbar {
+    height: 48px;
+    background-color: var(--lima);
+    color: var(--branco);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    gap: 70px;
+    font-size: 15px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+.hero {
+    min-height: 600px;
+    background:
+        linear-gradient(#0003, #0005),
+        url("./images/banner.jpeg");
+    position: relative;
+    color: var(--branco);
+    padding: 25px 30px;
+    display: flex;
+    flex-direction: column;
+    background-repeat: no-repeat;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.search {
+    flex: 1;
+    display: flex;
+    max-width: 500px;
+    margin-left: auto;
+}
+
+#searchInput {
+    width: 100%;
+    height: 48px;
+    border: 0;
+    border-radius: 25px 0 0 25px;
+    padding: 0 22px;
+    background: #ffffffcc;
+    color: #222;
+    outline: 0;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 30px;
+}
+
+.hero-content {
+    text-align: center;
+    margin: auto 0 20px;
+}
+
+.hero-content h1 {
+    font-size: 40px;
+    text-shadow: 2px 2px 3px #333;
+    margin: 0;
+    font-weight: 900;
+}
+
+.cep {
+    display: flex;
+    gap: 10px;
+    align-self: flex-start;
+    font-style: italic;
+    margin: 0 0 12px 8px;
+}
+
+.category {
+    width: 10%;
+    text-align: center;
+    font-weight: 900;
+    font-size: 14px;
+}
+
+.categories {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.category img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+    margin: auto;
+    border: 2px solid #ffffff;
+}
+
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+    height: 40px;
+    width: 40px;
+    padding: 5px;
+}
+
+.btn-action:hover {
+    align-items: center;
+    align-content: center;
+    align-self: center;
+}
+
+.btn-action img {
+    display: flex;
+    background-color: #ffffff;
+    align-items: center;
+    align-self: center;
+}
+
+.search button {
+    width: 65px;
+    border: 0;
+    border-radius: 0 25px 25px 0;
+    background: #ffffffcc;
+    cursor: pointer;
+}
+
+.cep img {
+    width: 48px;
+    height: 48px;
+    min-width: 24px;
+    min-height: 24px;
+    max-width: 64px;
+    max-height: 64px;
+}
+
+.products-section {
+    background: #76985b;
+    padding: 16px 5% 45px;
+}
+
+.section-tools {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    color: var(--branco);
+}
+
+.more,
+.filters {
+    font-weight: 700;
+}
+
+.filters {
+    position: relative;
+}
+
+.filter-box {
+    display: none;
+    background: var(--branco);
+    color: #222;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px #0003;
+    position: absolute;
+    right: 0;
+    top: 28px;
+    z-index: 10;
+}
+
+.filters:hover .filter-box {
+    display: block;
+}
+
+.filter-box label {
+    display: block;
+    margin: 7px 0;
+    white-space: nowrap;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 25px;
+    min-height: 270px;
+    padding: 14px;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 1px 0 #00000005;
+}
+
+.card img {
+    width: 150px;
+    height: 145px;
+    object-fit: contain;
+    margin: 10px auto 4px;
+    display: block;
+}
+
+.card h3 {
+    font-size: 12px;
+    line-height: 1.25;
+    margin: 3px 0;
+}
+
+.price {
+    font-size: 12px;
+    margin: 2px 0 12px;
+}
+
+.add {
+    width: 100%;
+    border: 0;
+    border-radius: 22px;
+    background: --var(--verde2);
+    color: #ffffff;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.add:hover {
+    background: --var(--verde);
+}
+
+.season {
+    color: #ffffff;
+    padding: 70px 4%;
+    min-height: 300px;
+    background: linear-gradient(#004, #0005), url("./images/banner.jpeg") center/cover;
+}
+
+.season h2 {
+    font-size: 42px;
+    margin: 0;
+    text-shadow: 2px 2px #222;
+}
+
+.season p {
+    font-family: Georgia, serif;
+    margin: 4px;
+    font-size: 30px;
+}
+
+@media (max-width: 800px) {
+    .hero {
+        min-height: auto;
+    }
+
+    .nav {
+        flex-wrap: wrap;
+    }
+
+    .search {
+        order: 3;
+        width: 100%;
+        max-width: none;
+    }
+
+    .nav-actions {
+        font-size: 24px;
+    }
+
+    .hero-content h1 {
+        font-size: 28px;
+        margin: 35px 0;
+    }
+
+    .categories {
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding-bottom: 10px;
+    }
+
+    .category {
+        min-width: 92px;
+        font-size: 11px;
+    }
+
+    .category img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+    }
+
+    .toolbar {
+        gap: 15px;
+        font-size: 15px;
+        height: 42px;
+    }
+
+    .toolbar strong {
+        font-size: 14px;
+    }
+
+    .card {
+        min-height: 245px;
+    }
+
+    .card img {
+        min-height: 120px;
+        height: 125px;
+    }
+
+    .season {
+        min-height: 230px;
+        padding: 50px 5%;
+    }
+
+    .season h2 {
+        font-size: 28px;
+    }
+
+    .season p {
+        font-size: 23px;
+    }
+
+    .footer {
+        grid-template-columns: 1fr;
+    }
+
+    .socials {
+        margin-top: 15px;
+    }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "sabor",
+  "version": "1.0.0",
+  "description": "> Primeiro passo >> Segundo Passo",
+  "license": "ISC",
+  "author": "Luís Sousa",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "setup": "node setup.js"
+  },
+  "dependencies": {
+    "compression": "^1.8.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.5",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0",
+    "helmet": "^8.3.0",
+    "knex": "^3.3.0",
+    "morgan": "^1.12.1",
+    "multer": "^2.5.0",
+    "mysql2": "^3.24.5"
+  }
+}
